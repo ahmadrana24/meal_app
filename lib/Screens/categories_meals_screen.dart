@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/Widgets/meal_item.dart';
-import 'package:meal_app/dummy_data.dart';
 import 'package:meal_app/models/meals.dart';
 
 class CategoriesMealsScreen extends StatefulWidget {
+  final List<Meal> availableMeals;
   static const routeName = '/category-meals';
-  const CategoriesMealsScreen({Key key}) : super(key: key);
+  CategoriesMealsScreen(this.availableMeals);
 
   @override
   _CategoriesMealsScreenState createState() => _CategoriesMealsScreenState();
@@ -22,7 +22,7 @@ class _CategoriesMealsScreenState extends State<CategoriesMealsScreen> {
           ModalRoute.of(context).settings.arguments as Map<String, String>;
       categoryTitle = routeArgs['title'];
       final categoryId = routeArgs['id'];
-      displayedMeals = DUMMY_MEALS.where((meal) {
+      displayedMeals = widget.availableMeals.where((meal) {
         return meal.categories.contains(categoryId);
       }).toList();
       _loadedInitData = true;
@@ -31,10 +31,10 @@ class _CategoriesMealsScreenState extends State<CategoriesMealsScreen> {
     super.didChangeDependencies();
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   void _removeMeal(String mealId) {
     setState(() {
@@ -57,7 +57,7 @@ class _CategoriesMealsScreenState extends State<CategoriesMealsScreen> {
             duration: displayedMeals[index].duration,
             imageUrl: displayedMeals[index].imageUrl,
             title: displayedMeals[index].title,
-            removeItem: _removeMeal,
+            // removeItem: _removeMeal, 
           );
         },
         itemCount: displayedMeals.length,
